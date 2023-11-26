@@ -7,6 +7,7 @@ import sys
 # haena
 
 
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DukPoint.settings')
