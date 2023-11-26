@@ -8,6 +8,7 @@ import sys
 # dabin
 # jinhyo
 
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DukPoint.settings')
