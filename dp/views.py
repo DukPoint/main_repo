@@ -14,3 +14,8 @@ def main(request):
         'dp/main.html'
     )
 
+def mypage(request):
+    return render(
+        request,
+        'mypage.html'
+    )
