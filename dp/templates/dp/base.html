@@ -120,8 +120,8 @@
           <div class="dropdown">
             <a class="bi bi-person fa-2x" style="font-size: 31px;" href="login.html"></a>
             <div class="dropdown-content">
-              <a href="#"><div class="link-box">로그인</div></a>
-              <a href="#"><div class="link-box">회원가입</div></a>
+              <a href="{% url 'signin' %}"><div class="link-box">로그인</div></a>
+              <a href="{% url 'signup' %}"><div class="link-box">회원가입</div></a>
               <a href="{% url 'logout' %}"><div class="link-box">로그아웃</div></a>
             </div>
           </div>
