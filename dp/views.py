@@ -28,7 +28,7 @@ def main(request):
 
 
 #로그인,회원가입
-class SignUpView(View):
+class SignUpView(View):  # 회원가입
     def get(self, request):
         image_list = ['image/image1.jpg', 'image/image2.jpg', 'image/image3.jpg', 'image/image4.jpg',
                       'image/image5.jpg', 'image/image6.jpg']
@@ -48,7 +48,7 @@ class SignUpView(View):
         return JsonResponse({'message': '회원가입 완료'}, status=200)
 
 
-class SignUpView2(View):
+class SignUpView2(View):  # 회원가입
     def get(self, request):
         image_list = ['image/image1.jpg', 'image/image2.jpg', 'image/image3.jpg', 'image/image4.jpg',
                       'image/image5.jpg', 'image/image6.jpg']
@@ -71,7 +71,7 @@ class SignUpView2(View):
         )
 
 
-class SignInView(View):
+class SignInView(View):  # 로그인 페이지 
     def get(self, request):
         image_list = ['image/image1.jpg', 'image/image2.jpg', 'image/image3.jpg', 'image/image4.jpg',
                       'image/image5.jpg', 'image/image6.jpg']
