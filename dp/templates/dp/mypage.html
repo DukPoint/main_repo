@@ -1,71 +1,105 @@
+<!-- jQuery 로드 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!-- 부트스트랩 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<!-- 부트스트랩 Datepicker 및 스크립트 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 {% extends 'dp/base.html' %}
 
 {% block main-area %}
+    {% load static %}
+    <style>
+        /* 가운데 정렬 스타일 추가 */
+        .hero {
+            text-align: center;
+        }
 
-<header>
-    <img src="#">
-    <h1> My Page </h1>
-    <p>나의 적립</p>
-</header>
-<!--<div class ="PointInfo_root">-->
-<!--    <div class="PointInfo_title">나의 적립</div>-->
-<!--    <div class="container-box">-->
-<!--        <div class="Tabs_root">-->
-<!--            <div class="Tabs_not_selected">-->
-<!--                <p></p>-->
-<!--            </div>-->
+        .hero h5, .hero p, h5, p, button, .DateSelector_view-date__ni2D4 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+
+<!--    <div class="hero">-->
+<!--        <div class="hero_image">-->
+<!--            <img src="{% static 'assets/images/hero/main_img_2.jpg' %}" alt="hero_image" />-->
 <!--        </div>-->
-<!--    </div>-->
-
-<!--</div>-->
-<div>
-    <div class="DateSelector_date-btn">
-        <button class="DateSelector_selected">1개월</button>
-        <button class="DateSelector_not-selected">3개월</button>
-        <button class="DateSelector_not-selected">6개월</button>
+        <h5> My Page </h5>
+        <p>나의 적립</p>
     </div>
-    <div class="DateSelector_date-num-selector">
-        <button>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.5944 1.57098H13.7192C15.4196 1.57098 16.8002 2.95158 16.8002 4.65198V13.2866C16.8002 14.987 15.4196 16.3676 13.7192 16.3676H4.2812C2.5808 16.3676 1.2002 14.987 1.2002 13.2866V4.65198C1.2002 2.95158 2.5808 1.57098 4.2812 1.57098H4.406V1.35258C4.406 1.03278 4.6712 0.767578 4.991 0.767578C5.3186 0.767578 5.576 1.03278 5.576 1.35258V1.57098H12.4244V1.35258C12.4244 1.03278 12.6896 0.767578 13.0094 0.767578C13.3292 0.767578 13.5944 1.03278 13.5944 1.35258V1.57098ZM2.3702 4.78457H15.6302V4.65198C15.6302 3.59897 14.7722 2.74098 13.7192 2.74098H13.5944V2.95938C13.5944 3.28698 13.3292 3.54438 13.0094 3.54438C12.6896 3.54438 12.4244 3.28698 12.4244 2.95938V2.74098H5.576V2.95938C5.576 3.28698 5.3186 3.54438 4.991 3.54438C4.6712 3.54438 4.406 3.28698 4.406 2.95938V2.74098H4.2812C3.2282 2.74098 2.3702 3.59897 2.3702 4.65198V4.78457ZM8.42941 13.7676H7.19543L10.0656 8.1918V8.14609H6.7384V7.14977H11.2996V8.16438L8.42941 13.7676Z" fill="#5A5F67"></path></svg>
-            <p>기간설정</p>
-        </button>
+    <h5>나의 적립</h5>
+    <p>사용가능 포인트</p>
+    <p>{{ user_points }}<h5>점</h5></p>
+
+    <form>
+        <input type="text" id="start_date" name="start_date" placeholder="Start Date">
+        <input type="text" id="end_date" name="end_date" placeholder="End Date">
+        <button type="button" onclick="setDateFilter(1)">1개월</button>
+        <button type="button" onclick="setDateFilter(3)">3개월</button>
+        <button type="button" onclick="setDateFilter(6)">6개월</button>
+        <button type="button" onclick="clearDateFilter()">초기화</button>
+    </form>
+
+    <div class="DateSelector_view-date__ni2D4">
+        {{ start_date|default:"" }} ~ {{ end_date|default:"" }}
     </div>
-</div>
-    <div class="DateSelector_view-date__ni2D4">2023-11-01 ~ 2022-11-30</div>
-<div>
-    <div class="PointList_contents"><div class="PointList_list-box">
-            <p class="PointList_title">투썸플레이스 북한산우이역점</p>
-        </div>
-        <div><p class="PointList_point__5xFap PointList_increase__aUxoB">+ 100P</p>
-            <p class="PointList_status-no-detail__H3Ktr PointList_increase__aUxoB">&nbsp;적립</p>
-        </div>
-        </div>
-            <div class="PointList_">2023.11.01 19:00:24</div>
-        </div>
 
+    <h5>적립 내역</h5>
+    {% for payment in payments %}
+        <div class="PaymentList_contents">
+            <div class="PaymentList_list-box">
+                <p class="PaymentList_title">{{ payment.store.name }}</p>
+            </div>
+            <div>
+                <p class="PaymentList_amount__5xFap PaymentList_increase__aUxoB">{{ payment.total_amount }}원</p>
+                <p class="PaymentList_status-no-detail__H3Ktr PaymentList_increase__aUxoB">결제일: {{ payment.payment_date|date:"Y-m-d H:i:s" }}</p>
+            </div>
+        </div>
+    {% endfor %}
 
-<div>
-    <div class="PointList_contents"><div class="PointList_list-box">
-            <p class="PointList_title">투썸플레이스 북한산우이역점</p>
-        </div>
-        <div><p class="PointList_point__5xFap PointList_increase__aUxoB">+ 100P</p>
-            <p class="PointList_status-no-detail__H3Ktr PointList_increase__aUxoB">&nbsp;적립</p>
-        </div>
-        </div>
-            <div class="PointList_">2023.11.01 19:00:24</div>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#start_date, #end_date').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
 
+        function setDateFilter(months) {
+            var endDate = new Date();
+            var startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - months);
 
-<div>
-    <div class="PointList_contents"><div class="PointList_list-box">
-            <p class="PointList_title">블랙다운</p>
-        </div>
-        <div><p class="PointList_point__5xFap PointList_increase__aUxoB">- 3000P</p>
-            <p class="PointList_status-no-detail__H3Ktr PointList_increase__aUxoB">&nbsp;차감</p>
-        </div>
-        </div>
-            <div class="PointList_">2023.11.12 19:00:24</div>
-        </div>
+            $('#start_date').datepicker('setDate', startDate);
+            $('#end_date').datepicker('setDate', endDate);
+            updateDateView();
+        }
 
+        function clearDateFilter() {
+            $('#start_date').val('');
+            $('#end_date').val('');
+            updateDateView();
+        }
+
+        function updateDateView() {
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+
+            if (startDate && endDate) {
+                $('.DateSelector_view-date__ni2D4').text(startDate + ' ~ ' + endDate);
+            } else {
+                $('.DateSelector_view-date__ni2D4').text('');
+            }
+        }
+    </script>
 
 {% endblock %}
