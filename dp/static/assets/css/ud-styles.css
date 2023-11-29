@@ -35,7 +35,7 @@ body {
 }
 
 img {
-  max-width: 8%;
+  max-width: 7%;
 }
 
 a,
@@ -61,6 +61,7 @@ button:focus,
 a:focus,
 a:hover {
   text-decoration: none;
+  color: #971B44;
 }
 
 i,
@@ -121,10 +122,10 @@ ol {
 }
 
 p {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 26px;
-  color: var(--body-color);
+  color: #FFFFFF;
   margin: 0px;
 }
 
@@ -323,6 +324,7 @@ p {
     padding: 0px;
   }
 }
+
 
 .navbar-nav .nav-item > a {
   font-size: 16px;
@@ -1464,7 +1466,7 @@ p {
 /* ===== Footer CSS ===== */
 .ud-footer {
   background: #5F5B5B;
-  padding-top: 100px;
+  padding-top: 80px;
   position: relative;
   z-index: 1;
   overflow: hidden;

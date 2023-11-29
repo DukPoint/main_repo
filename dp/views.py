@@ -1,8 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout(request):
+    logout(request)
+    return redirect('login')  # 로그아웃 후 리다이렉트할 페이지 지정
 
 # Create your views here.
-<<<<<<< HEAD
-=======
+
 def store(request):
     return render(
         request,
@@ -16,4 +21,8 @@ def main(request):
         'dp/main.html'
     )
 
->>>>>>> a6126ddf02025751aa20b9b3facc053f119da5f3
+def review1(request):
+    return render(
+        request,
+        'dp/review1.html'
+    )

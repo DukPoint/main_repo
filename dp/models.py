@@ -1,9 +1,5 @@
 from django.db import models
 
-<<<<<<< HEAD
-# Create your models here.
-=======
-
 # Create your models here.
 class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 관리
     email = models.CharField(max_length=300, unique=True)  # 그리하여 email 필드를 생성
@@ -53,4 +49,3 @@ class Payment(models.Model):  # 결제 정보
             self.total_amount = max(0, menu_price - self.points_used - discount)
 
         super().save(*args, **kwargs)
->>>>>>> a6126ddf02025751aa20b9b3facc053f119da5f3
