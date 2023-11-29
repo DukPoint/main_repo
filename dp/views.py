@@ -1,14 +1,18 @@
 from django.shortcuts import render
 import json
 import random
-
 from .models import User
-
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
-# Create your views here.
+def logout(request):
+    logout(request)
+    return redirect('login')  # 로그아웃 후 리다이렉트할 페이지 지정
+
+
 def store(request):
     return render(
         request,
@@ -87,3 +91,10 @@ class SignInView(View):
             return JsonResponse({'message': f'{user.email}님 로그인 성공!'}, status=200)
         else:
             return JsonResponse({'message': '이메일 또는 비밀번호가 올바르지 않습니다.'}, status=400)
+
+
+def review1(request):
+    return render(
+        request,
+        'dp/review1.html'
+    )
