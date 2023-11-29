@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Store
 import json
 import random
 from .models import User
@@ -8,15 +9,33 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
+# Create your views here.
+
+
+def search(request):
+    query = request.GET.get('query', '')
+    stores = Store.objects.filter(name__icontains=query)
+
+    context = {
+        'stores': stores,
+        'query': query,
+    }
+    return render(request, 'dp/store.html', context)
+
+
 def logout(request):
     logout(request)
     return redirect('login')  # 로그아웃 후 리다이렉트할 페이지 지정
 
 
 def store(request):
+    stores = Store.objects.all()
     return render(
         request,
-        'dp/store.html'
+        'dp/store.html',
+        {
+            'stores': stores,
+        }
     )
 
 
@@ -98,3 +117,4 @@ def review1(request):
         request,
         'dp/review1.html'
     )
+

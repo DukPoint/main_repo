@@ -15,6 +15,8 @@ class Store(models.Model):  # 가게 정보
     is_cafe = models.BooleanField(default=True)  # True -> 카페, False -> 레스토랑
     image = models.ImageField(upload_to='dp/store_images/%Y/%m/%d', blank=True, null=True)  # 가게 이미지, pip install pillow 필수
     discount = models.PositiveIntegerField(default=0)  # 할인 정보
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
 
 
 class Menu(models.Model):  # 가게의 메뉴 정보
