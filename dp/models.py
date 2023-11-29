@@ -1,11 +1,11 @@
 from django.db import models
 
-
 # Create your models here.
 class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 관리
     email = models.CharField(max_length=300, unique=True)  # 그리하여 email 필드를 생성
     password = models.CharField(max_length=400)
     points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
+
 
 
 class Store(models.Model):  # 가게 정보
