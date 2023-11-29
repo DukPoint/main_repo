@@ -1,0 +1,105 @@
+<!-- jQuery 로드 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!-- 부트스트랩 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<!-- 부트스트랩 Datepicker 및 스크립트 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+{% extends 'dp/base.html' %}
+
+{% block main-area %}
+    {% load static %}
+    <style>
+        /* 가운데 정렬 스타일 추가 */
+        .hero {
+            text-align: center;
+        }
+
+        .hero h5, .hero p, h5, p, button, .DateSelector_view-date__ni2D4 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+
+<!--    <div class="hero">-->
+<!--        <div class="hero_image">-->
+<!--            <img src="{% static 'assets/images/hero/main_img_2.jpg' %}" alt="hero_image" />-->
+<!--        </div>-->
+        <h5> My Page </h5>
+        <p>나의 적립</p>
+    </div>
+    <h5>나의 적립</h5>
+    <p>사용가능 포인트</p>
+    <p>{{ user_points }}<h5>점</h5></p>
+
+    <form>
+        <input type="text" id="start_date" name="start_date" placeholder="Start Date">
+        <input type="text" id="end_date" name="end_date" placeholder="End Date">
+        <button type="button" onclick="setDateFilter(1)">1개월</button>
+        <button type="button" onclick="setDateFilter(3)">3개월</button>
+        <button type="button" onclick="setDateFilter(6)">6개월</button>
+        <button type="button" onclick="clearDateFilter()">초기화</button>
+    </form>
+
+    <div class="DateSelector_view-date__ni2D4">
+        {{ start_date|default:"" }} ~ {{ end_date|default:"" }}
+    </div>
+
+    <h5>적립 내역</h5>
+    {% for payment in payments %}
+        <div class="PaymentList_contents">
+            <div class="PaymentList_list-box">
+                <p class="PaymentList_title">{{ payment.store.name }}</p>
+            </div>
+            <div>
+                <p class="PaymentList_amount__5xFap PaymentList_increase__aUxoB">{{ payment.total_amount }}원</p>
+                <p class="PaymentList_status-no-detail__H3Ktr PaymentList_increase__aUxoB">결제일: {{ payment.payment_date|date:"Y-m-d H:i:s" }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#start_date, #end_date').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+
+        function setDateFilter(months) {
+            var endDate = new Date();
+            var startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - months);
+
+            $('#start_date').datepicker('setDate', startDate);
+            $('#end_date').datepicker('setDate', endDate);
+            updateDateView();
+        }
+
+        function clearDateFilter() {
+            $('#start_date').val('');
+            $('#end_date').val('');
+            updateDateView();
+        }
+
+        function updateDateView() {
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+
+            if (startDate && endDate) {
+                $('.DateSelector_view-date__ni2D4').text(startDate + ' ~ ' + endDate);
+            } else {
+                $('.DateSelector_view-date__ni2D4').text('');
+            }
+        }
+    </script>
+
+{% endblock %}

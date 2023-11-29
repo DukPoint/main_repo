@@ -1,3 +1,8 @@
+// 예지 수정
+<!-- jQuery 로드 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+</script>
+
 (function () {
   "use strict";
 
