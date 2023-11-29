@@ -1,11 +1,11 @@
 from django.db import models
 
-
 # Create your models here.
 class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 관리
     email = models.CharField(max_length=300, unique=True)  # 그리하여 email 필드를 생성
     password = models.CharField(max_length=400)
     points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
+
 
 
 class Store(models.Model):  # 가게 정보
@@ -15,6 +15,8 @@ class Store(models.Model):  # 가게 정보
     is_cafe = models.BooleanField(default=True)  # True -> 카페, False -> 레스토랑
     image = models.ImageField(upload_to='dp/store_images/%Y/%m/%d', blank=True, null=True)  # 가게 이미지, pip install pillow 필수
     discount = models.PositiveIntegerField(default=0)  # 할인 정보
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
 
 
 class Menu(models.Model):  # 가게의 메뉴 정보

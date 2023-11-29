@@ -6,3 +6,4 @@ admin.site.register(Store)
 admin.site.register(User)
 admin.site.register(Menu)
 admin.site.register(Payment)
+
