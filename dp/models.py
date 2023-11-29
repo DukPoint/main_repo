@@ -7,6 +7,7 @@ class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 
     points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
 
 
+
 class Store(models.Model):  # 가게 정보
     name = models.CharField(max_length=200)  # 가게 이름
     location = models.CharField(max_length=400)  # 위치
