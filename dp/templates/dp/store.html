@@ -1,7 +1,8 @@
 {% extends 'dp/base.html' %}
 
 {% block main-area %}
-<style>
+{% load static %}
+<style xmlns:text-align="http://www.w3.org/1999/xhtml">
     .search-form {
         max-width: 50%;
         margin: 0 auto;
@@ -121,30 +122,49 @@
     .info .link {
         color: #5085BB;
     }
+
+     .store{
+         width: 100%;
+         height: 30vw; /* 30% of viewport width */
+         background: url({% static 'assets/images/storeImg/coffee_.jpg' %}) no-repeat center;
+         background-size: 100% 100%;
+         padding: 12vw; /* 10% of viewport width */
+     }
+
+    .store_text{
+        color:white
+    }
+
+
 </style>
 
 <body>
+<div class="store wow fadeInUp" data-wow-delay=".25s">
 
-    <div style="text-align: center;">
-        <h1>STORE</h1>
-        덕성여대 근처 텀블러 할인 가능 매장을 찾아보세요
-        <br><br>
+    <div class="store_text" style="text-align: center;">
+    <h1 style="color:white">STORE</h1>
+    덕성여대 근처 다회용기 할인 가능 매장을 찾아보세요
+    <br><br>
     </div>
 
-    <form class="d-flex search-form" role="search" method="GET" action="{% url 'search' %}">
+    <form class="d-flex search-form" role="search" method="GET" action="{% url 'search' %}" id="searchForm">
         <input class="form-control me-2 search-input" type="search" name="query" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-secondary" type="submit">Search</button>
     </form>
+
+</div>
+
+
 
     <div style="text-align: center;">
         <br>
         {% if stores %}
         {% else %}
-            <p>다른 가게를 검색해보세요!</p>
+            <p style="color:black">다른 가게를 검색해보세요!</p>
         {% endif %}
         <br>
         <br>
-        <br>
+
         <h3>매장안내</h3>
         원하시는 매장을 선택하세요
         <br><br>
@@ -261,9 +281,12 @@
         function closeOverlay() {
             overlay.setMap(null);
         }
-    </script>
+
+</script>
+
 
 </body>
 
 {% endblock %}
+
 
