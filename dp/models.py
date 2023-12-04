@@ -6,17 +6,23 @@ class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 
     password = models.CharField(max_length=400)
     points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
 
+    def __str__(self):
+        return self.email
+
 
 
 class Store(models.Model):  # 가게 정보
     name = models.CharField(max_length=200)  # 가게 이름
     location = models.CharField(max_length=400)  # 위치
     phone = models.CharField(max_length=30, blank=True, null=True)  # 전화번호
-    is_cafe = models.BooleanField(default=True)  # True -> 카페, False -> 레스토랑
+    is_cafe = models.BooleanField()  # True -> 카페, False -> 레스토랑
     image = models.ImageField(upload_to='dp/store_images/%Y/%m/%d', blank=True, null=True)  # 가게 이미지, pip install pillow 필수
     discount = models.PositiveIntegerField(default=0)  # 할인 정보
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return self.name
 
 
 class Menu(models.Model):  # 가게의 메뉴 정보
@@ -25,12 +31,18 @@ class Menu(models.Model):  # 가게의 메뉴 정보
     image = models.ImageField(upload_to='dp/menu_images/%Y/%m/%d', blank=True, null=True)  # 메뉴 이미지, pip install pillow 필수
     price = models.PositiveIntegerField(default=0)  # 메뉴 가격
 
+    def __str__(self):
+        return f'{self.name} - {self.price}'
+
 
 class Review(models.Model):  # 후기
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     store = models.ForeignKey('Store', on_delete=models.CASCADE)
     comment = models.TextField(verbose_name='후기')
     created_at = models.DateTimeField(auto_now_add=True)  # 후기 생성 날짜 자동 저장
+
+    def __str__(self):
+        return f'Review by {self.user.email} for {self.store.name}'
 
 
 class Payment(models.Model):  # 결제 정보

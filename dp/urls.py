@@ -8,7 +8,7 @@ from .views import logout
 
 urlpatterns = [
     path('logout/', views.logout, name='logout'),
-    path('store/', views.store),
+    path('store/', views.store, name='store'),
     path('search/', search, name='search'),
     path('', views.main, name='main'),
     path('signup/', SignUpView.as_view(), name='signup'),
