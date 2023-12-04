@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views import View
+from .models import Payment
 from .models import Store
 import json
 import random
@@ -8,6 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -44,6 +47,25 @@ def main(request):
         request,
         'dp/main.html'
     )
+
+
+def mypage(request):
+    return render(
+        request,
+        'dp/mypage.html'
+    )
+
+class MyPageView(View):
+    template_name = 'dp/mypage.html'
+
+    def get(self, request, *args, **kwargs):
+        user_points = 8300
+        payments = Payment.objects.all()[:10]
+        context = {
+            'user_points': user_points,
+            'payments': payments,
+        }
+        return render(request, self.template_name, {'payments': payments})
 
 
 #로그인,회원가입
@@ -117,4 +139,5 @@ def review1(request):
         request,
         'dp/review1.html'
     )
+
 
