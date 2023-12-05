@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
-from django.contrib.auth.admin import UserAdmin
-
 from .models import User, Store, Menu, Review, Payment
 
 # Register your models here.
@@ -11,6 +9,7 @@ admin.site.register(Menu)
 admin.site.register(Payment)
 admin.site.register(Review)
 
+
 class CustomUserAdmin(ModelAdmin):
     model = User
     list_display = ('email', 'name', 'is_staff', 'is_superuser', 'points')  # 원하는 필드를 표시
@@ -18,6 +17,5 @@ class CustomUserAdmin(ModelAdmin):
 
     ordering = ('email',)
 
+
 admin.site.register(User, CustomUserAdmin)
-
-

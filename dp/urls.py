@@ -10,6 +10,13 @@ from .views import change_password_mypage
 
 urlpatterns = [
     path('logout/', views.my_logout, name='logout'),
+=======
+
+urlpatterns = [
+    path('order_payment/<int:store_id>/<int:menu_id>/', views.OrderPayment.as_view(), name='order_payment'),
+    path('store_menu/<int:pk>/', views.StoreMenu.as_view(), name='store_menu'),
+    path('logout/', views.logout, name='logout'),
+>>>>>>> 1f44db76de1c6c54ea8ef0b6d29d6c17631a4d38
     path('store/', views.store, name='store'),
     path('mypage/', MyPageView.as_view(), name='mypage'),
     path('mypage_detail_1/', views.mypage_detail_1, name= 'mypage_detail_1'),
@@ -18,6 +25,7 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('', views.main, name='main'),
     path('signup/', SignUpView.as_view(), name='signup'),
+<<<<<<< HEAD
     path('signin/', SignInView.as_view(), name='signin'),
     path('signup2/', SignUpView2.as_view(), name='signup2'),
     path('signup3/', SignUpView3.as_view(), name='signup3'),
@@ -26,5 +34,13 @@ urlpatterns = [
     path('signin/', SignInView.as_view(), name='signin'),
     path('review1/', views.review1, name='review1'),
     path('change_password_mypage/', change_password_mypage, name='change_password_mypage'),
+=======
+    path('signup2/', SignUpView2.as_view(), name='signup2'),
+    path('signup3/', SignUpView3.as_view(), name='signup3'),
+    path('signup4/', SignUpView4.as_view(), name='signup4'),
+    path('signup_complete/', SignUpView5.as_view(), name='signup_complete'),
+    path('signin/', SignInView.as_view(), name='signin'),
+    path('review1/', views.review1, name='review1'),
+>>>>>>> 1f44db76de1c6c54ea8ef0b6d29d6c17631a4d38
 ]
 

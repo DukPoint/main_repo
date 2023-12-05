@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -22,11 +23,13 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractUser):
     email = models.CharField(max_length=300, unique=True)
     password = models.CharField(max_length=400)
     points = models.PositiveIntegerField(default=0)
     name = models.CharField(max_length=150, default='')
+
     # last_login 필드 추가
     last_login = models.DateTimeField(auto_now=True, null=True, blank=True)
     username=None
@@ -35,10 +38,6 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
-
-    def __str__(self):
-        return self.email
-
 
 
 class Store(models.Model):  # 가게 정보

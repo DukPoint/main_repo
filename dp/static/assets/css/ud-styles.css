@@ -515,6 +515,12 @@ p {
 .ud-hero-no-top{
     padding-top: 180px;
 }
+<<<<<<< HEAD
+=======
+.ud-hero-no-top{
+    padding-top: 100px;
+}
+>>>>>>> 1f44db76de1c6c54ea8ef0b6d29d6c17631a4d38
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .ud-hero {
     padding-top: 160px;
