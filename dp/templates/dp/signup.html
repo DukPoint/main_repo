@@ -36,7 +36,9 @@
     });
     </script>
     <style>
-
+        p{
+      color: #000000;
+    }
 
     .show-consent {
         color: #971B44; /* 이용약관 텍스트 색상 변경 */
@@ -97,7 +99,7 @@
 
     .highlight {
       position: absolute;
-      width: 25%;
+      width: 20%;
       height: 100%;
       background-color: #888;
     }
@@ -216,13 +218,13 @@
         if (!(agreedCheckbox.checked && agreedCheckbox2.checked)) {
             agreedError.innerText = "모두 동의해야 합니다.";
             alert("모두 동의해야 합니다.");
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
             return;
         }
 
         // 이용약관 동의가 확인되면 다음 페이지로 이동
-        window.location.href = "signup2/";
-        window.location.reload(true);
+        window.location.href = "{% url 'signup2' %}";
+        event.preventDefault(); // Prevent the default form submission
 
     });
 </script>

@@ -208,6 +208,12 @@
         {% endfor %}
     </div>
 
+    <div id="pk" style="display: none">
+        {% for s in stores %}
+            {{s.pk}},
+        {% endfor %}
+    </div>
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a31ea3e295fc7de01edd2da4e1d9d7ad&libraries=services,clusterer,drawing"></script>
     <script>
         var container = document.getElementById('map');
@@ -223,6 +229,7 @@
         var list_location = document.getElementById("location").innerText.split(',');
         var list_phone = document.getElementById("phone").innerText.split(',');
         var list_image = document.getElementById("image").innerText.split(',');
+        var list_pk = document.getElementById("pk").innerText.split(',');
 
         var storeArray = new Array();
         var overlay; // overlay 변수 전역으로 선언
@@ -240,7 +247,7 @@
                 title: list_name[index]
             });
 
-            (function (marker, storePosition, storeName,storeLocation,storePhone,storeImage) {
+            (function (marker, storePosition, storeName,storeLocation,storePhone,storeImage,storePk) {
                 var content = '<div class="wrap">' +
                     '    <div class="info">' +
                     '        <div class="title">' +
@@ -254,7 +261,7 @@
                     '            <div class="desc">' +
                     '                <div class="ellipsis">'+storeLocation+'</div>' +
                     '                <div class="ellipsis">'+storePhone+'</div>' +
-                    '                <div><button class="btn" style="background-color: #971B44;" ><a href="#order" class="link" style="color:white">주문하기</a></button></div>' +
+                    '                <div><button class="btn" style="background-color: #971B44;" onclick="goToStoreMenu(' + storePk + ')"><span style="color:white">주문하기</span></button></div>' +
                     '            </div>' +
                     '        </div>' +
                     '    </div>' +
@@ -275,7 +282,12 @@
                     overlay.setMap(map);
                 });
 
-            })(marker, storeArray[index], list_name[index],list_location[index],list_phone[index],'<img src="' + list_image[index] + '" style="max-width: 100%; max-height: 100%;" alt="가게 이미지">');
+            })(marker, storeArray[index], list_name[index],list_location[index],list_phone[index],'<img src="' + list_image[index] + '" style="max-width: 100%; max-height: 100%;" alt="가게 이미지">', list_pk[index]);
+        }
+
+        function goToStoreMenu(storePk) {
+            var url = '/store_menu/' + storePk + '/';
+            window.location.href = url;
         }
 
         function closeOverlay() {

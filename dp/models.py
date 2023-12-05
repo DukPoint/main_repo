@@ -1,14 +1,44 @@
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 # Create your models here.
-class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 관리
-    email = models.CharField(max_length=300, unique=True)  # 그리하여 email 필드를 생성
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
+
+
+class User(AbstractUser):
+    email = models.CharField(max_length=300, unique=True)
     password = models.CharField(max_length=400)
-    points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
+    points = models.PositiveIntegerField(default=0)
+    name = models.CharField(max_length=150, default='')
 
-    def __str__(self):
-        return self.email
+    last_login = models.DateTimeField(auto_now=True, null=True, blank=True)
+    username = None
 
+    objects = CustomUserManager()
+
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
 
 
 class Store(models.Model):  # 가게 정보

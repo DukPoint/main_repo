@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DukPoint</title>
 
-    
+
     <!--====== Favicon Icon ======-->
     <link
       rel="shortcut icon"
@@ -110,7 +110,7 @@
               </li>
 
               <li class="nav-item">
-                <a class="ud-menu-scroll" href="#about">후기서비스</a>
+                <a class="ud-menu-scroll" href="{% url 'review1' %}">후기서비스</a>
               </li>
               <li class="nav-item">
                 <a class="ud-menu-scroll" href="{% url 'mypage' %}">마이페이지</a>
@@ -134,7 +134,8 @@
 
     <!-- ====== Hero Start ====== -->
 
-    <section class="ud-hero" id="home">
+    <section class="ud-hero ud-hero-no-top" id="home">
+
       <div class="container">
         {% block main-area %}
 
@@ -143,6 +144,7 @@
           <div class="col-lg-12">
             <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
               <h1 class="ud-hero-title">
+                DukPoint
               </h1>
             </div>
             <div class="ud-hero-image wow fadeInUp" data-wow-delay=".25s">
@@ -151,7 +153,7 @@
           </div>
         </div>
       </div>
-    </section> 
+    </section>
     <!-- ====== Hero End ====== -->
 
     <!-- ====== Footer Start ====== -->

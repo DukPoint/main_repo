@@ -14,6 +14,9 @@
   <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"
         crossorigin="anonymous"></script>
   <style>
+    p{
+      color: #000000;
+    }
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -48,43 +51,21 @@
 </style>
   <script>
     $(document).ready(function() {
-      // CSRF 토큰 가져오기
-      var csrftoken = $('[name=csrfmiddlewaretoken]').val();
+      // 폼이 변경될 때마다 호출되는 함수
+      function checkFormValidity() {
+        var formValid = $('#login-form')[0].checkValidity();
+        // 폼이 유효하면 버튼 활성화
+        $('#login-button').prop('disabled', !formValid);
+      }
 
-      // 로그인 버튼 클릭 시 동작
-      $('#login-form').submit(function(event) {
-        // 폼이 실제로 전송되지 않도록 막기
-        event.preventDefault();
+      // 폼이 변경될 때마다 checkFormValidity 함수 호출
+      $('#login-form').change(checkFormValidity);
 
-        // 입력된 이메일과 비밀번호 가져오기
-        var email = $('#floatingInput').val();
-        var password = $('#floatingPassword').val();
-
-        // AJAX를 사용하여 서버에 로그인 요청 보내기
-        $.ajax({
-          type: 'POST',
-          url: '{% url "signin" %}',
-          data: JSON.stringify({ email: email, password: password }),
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json',
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          success: function(response) {
-            // 로그인 성공 시 알림창 띄우기
-            alert(response.message);
-
-            // 홈 화면으로 리디렉션 (원하는 URL로 수정 필요)
-            window.location.href = '/';
-          },
-          error: function(error) {
-            // 로그인 실패 시 알림창 띄우기
-            alert('잘못된 이메일 또는 비밀번호입니다.');
-          }
-        });
-      });
+      // 초기에도 폼의 유효성을 체크하여 버튼 활성화 여부 설정
+      checkFormValidity();
     });
   </script>
+
 </head>
 
 <body class="bg-light">
@@ -97,14 +78,21 @@
             <h1 class="h3 mb-3 fw-normal"><strong>안녕하세요</strong></h1>
             <label class="form-label" style="margin-bottom: 20px; color: gray;">로그인해 주세요</label>
             <div class="form-floating">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
               <label for="floatingInput">Email address(ID)</label>
             </div>
             <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
               <label for="floatingPassword">Password</label>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="submit" >로그인</button>
+            {% if messages %}
+            <div>
+              {% for message in messages %}
+              {{ message.message }}
+              {% endfor %}
+            </div>
+            {% endif %}
+            <button id="login-button" class="btn btn-primary w-100 py-2" type="submit" disabled>로그인</button>
             <p style="margin-top: 20px; text-align: center;">계정이 없으신가요?
               <a href="{% url 'signup' %}" style="margin-left: 10px;">회원가입</a></p>
           </form>
@@ -121,6 +109,7 @@
 
 
 </body>
+
 
 </html>
 
