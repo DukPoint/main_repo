@@ -109,7 +109,7 @@ class MyPageView(View):
 def mypage_detail_1(request):
     return render(request, 'dp/mypage_detail_1.html')
 
-<<<<<<< HEAD
+
 @login_required
 def mypage_detail_2(request):
     return render(request, 'dp/mypage_detail_2.html')
@@ -171,8 +171,7 @@ def mypage_detail_2(request) :
         'dp/mypage_detail_2.html'
     )
 
-=======
->>>>>>> 1f44db76de1c6c54ea8ef0b6d29d6c17631a4d38
+
 # 로그인,회원가입
 class SignUpView(View):  # 회원가입 이용약관동의
     def get(self, request):
