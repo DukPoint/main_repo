@@ -121,8 +121,7 @@
 
 <h3>매장안내</h3>
 
-<!--지도 가져오기-->
-{% include 'dp/store.html' %}
+
 
 <script>
   // 이미지 변경을 담당하는 함수
@@ -131,10 +130,6 @@
     var imagePath = `{% static 'assets/images/hero/main_img_' %}${imageNumber}.png`;
     imageElement.src = imagePath;
   }
-
-</script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a31ea3e295fc7de01edd2da4e1d9d7ad&libraries=services,clusterer,drawing"></script>
-
 
 </script>
 {% endblock %}
