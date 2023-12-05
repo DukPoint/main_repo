@@ -208,14 +208,12 @@ class SignUpView2(View):  # 회원가입 이메일 입력
                 raise ValidationError('이메일을 입력하세요.')
             if User.objects.filter(email=email).exists():
                 raise ValidationError('이미 사용 중인 이메일입니다.')
-            else:
-                # 성공
-                request.session['email'] = email
-                return redirect('signup3')
+
             # 성공
             request.session['email'] = email
+            return redirect('signup3')
 
-    except ValidationError as e:
+        except ValidationError as e:
             # 이미 존재하는 이메일에 대한 에러를 알림
             messages.error(request, str(e))
             return redirect('signup2')

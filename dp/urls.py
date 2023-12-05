@@ -4,7 +4,7 @@ from .views import MyPageView
 from .views import search
 from .views import SignInView, SignUpView, SignUpView2, SignUpView3, SignUpView4, SignUpView5
 from .views import main
-from .views import logout
+from .views import my_logout
 from .views import mypage_detail_1, mypage_detail_2, check_password_mypage
 from .views import change_password_mypage
 
