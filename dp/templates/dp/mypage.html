@@ -1,4 +1,4 @@
-<!-- jQuery 로드 -->
+ <!-- jQuery 로드 -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <!-- 부트스트랩 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -6,79 +6,316 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
 {% extends 'dp/base.html' %}
 
 {% block main-area %}
     {% load static %}
     <style>
-        /* 가운데 정렬 스타일 추가 */
-        .hero {
-            text-align: center;
+        body {
+            color: #5F5B5B;
         }
 
-        .hero h5, .hero p, h5, p, button, .DateSelector_view-date__ni2D4 {
+        .hero {
+            width: 100%;
+            height: 30vw; /* 30% of viewport width */
+            background: url({% static 'assets/images/hero/update.png' %}) no-repeat center;
+            background-size: 100% 100%;
+            padding: 12vw; /* 10% of viewport width */
+        }
+
+        .hero_text {
             text-align: center;
+            color: #FFFFFF; /* 흰색으로 변경 */
+        }
+
+        h3 {
+            text-align: center;
+            color: #5F5B5B;
+        }
+
+        .update-main-img {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin-bottom: 1.5vw; /* 1.5% of viewport width */
+        }
+
+        .button, .DateSelector_view-date__ni2D4 {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         form {
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* 가로로 나란히 정렬 */
             align-items: center;
+            justify-content: center; /* 가운데 정렬 */
         }
-    </style>
 
-<!--    <div class="hero">-->
-<!--        <div class="hero_image">-->
-<!--            <img src="{% static 'assets/images/hero/main_img_2.jpg' %}" alt="hero_image" />-->
-<!--        </div>-->
-        <h5> My Page </h5>
-        <p>나의 적립</p>
+        #start_date,
+        #end_date {
+            margin-right: 1vw; /* 각 날짜 입력창 간격 조정 */
+        }
+
+        .main-content {
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            margin: 0px 8.8vw 0px 8.8vw;
+        }
+
+        .main-content-title {
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+            color: #5F5B5B;
+        }
+
+        .mypoint-box {
+            padding: 15px 40px;
+            margin-top: 20px;
+            color: #5F5B5B;
+
+        }
+
+        .mypoint-box .line {
+            width: auto;
+            max-width: 100%;
+            height: 30px;
+            max-height: 100%;
+        }
+
+        .mypoint-box .point-text {
+            text-align: left; /* 혹시라도 텍스트 정렬이 필요하면 추가 */
+            display: inline;
+            color: #5F5B5B; /* 원하는 색상으로 설정 */
+        }
+
+        .DateSelector_view-date__ni2D4 {
+            padding: 0.5vw 1vw; /* 필요에 따라 내부 여백 조정 */
+            background-color: #ffff; /* 배경색을 원하는 색상으로 지정 */
+            border: 2px solid #5F5B5B; /* 테두리 색상 지정 */
+            margin: 2vw 10vw;
+           /* border-radius: 10px; */
+            padding: 1vw;
+            text-align : center;
+        }
+
+        .setting-button {
+    display: flex;
+    margin: 10px;
+    align-items: center; /* 세로 가운데 정렬 */
+    flex-direction: column;
+}
+
+.setting-button a {
+    width: fit-content; /* 내용에 맞게 크기 지정 */
+}
+
+.setting-button button {
+    width: 68vw; /* 부모 너비에 맞게 확장 */
+    margin: 10px; /* 버튼 간 간격 조절 */
+    padding: 10px; /* 내부 여백 조절 */
+    background-color: #e1dad1;
+    border: none;
+    cursor: pointer;
+}
+
+        .date-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .date-buttons button {
+            margin: 2vw 0.4vw;
+          /*  border-radius: 10px; */
+            padding: 0.5vw 3vw;
+            background-color: #FFFFFF;
+            border: 2px solid #5F5B5B;
+        }
+
+       .view {
+            margin: 3vw 10vw;
+       }
+
+    .payment-item {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .payment-details {
+        color: #5F5B5B;
+    }
+
+    .payment-reward, .payment-use {
+        text-align: right;
+    }
+
+    .use-points {
+        color: red;
+    }
+
+    .reward-points {
+        color: blue;
+    }
+
+    .reward-label , .use-label {
+        color: #5F5B5B;
+    }
+
+    .payment-separator {
+        border-color: #e1dad1;
+    }
+
+    .mypoint {
+    display: flex;
+}
+
+.line {
+    width: auto;
+    max-width: 100%;
+    height: 100px;
+    max-height: 100%;
+}
+
+.point-container {
+    display: flex;
+    align-items: baseline; /* 포인트 숫자와 "점"을 같은 라인에 정렬 */
+    margin-left: 10px; /* 포인트 숫자와 "점" 간격 조절 */
+}
+
+.point-text {
+    margin : 15px;
+}
+
+</style>
+
+    <div class="hero">
+        <div class="hero_text">
+            <h3 style="color: #FFFFFF; "> My Page </h3>
+            <p>나의 적립</p>
+        </div>
     </div>
-    <h5>나의 적립</h5>
-    <p>사용가능 포인트</p>
-    <p>{{ user_points }}<h5>점</h5></p>
 
-    <form>
-        <input type="text" id="start_date" name="start_date" placeholder="Start Date">
-        <input type="text" id="end_date" name="end_date" placeholder="End Date">
-        <button type="button" onclick="setDateFilter(1)">1개월</button>
-        <button type="button" onclick="setDateFilter(3)">3개월</button>
-        <button type="button" onclick="setDateFilter(6)">6개월</button>
-        <button type="button" onclick="clearDateFilter()">초기화</button>
-    </form>
-
-    <div class="DateSelector_view-date__ni2D4">
-        {{ start_date|default:"" }} ~ {{ end_date|default:"" }}
+    <div class="main-content-title">
+        <h3>나의 적립</h3>
     </div>
 
-    <h5>적립 내역</h5>
+    <div class="main-content">
+
+    <div class="mypoint">
+    <img class="line" src="{% static 'assets/images/icon/line.png' %}" alt="line">
+        <div class = "point-text">
+        <p class="mypoint-text" style="color: #5F5B5B;font-weight: bold; display: inline;">사용가능 포인트<br></p>
+            {% if payments %}
+        <h2 style="text-align: left;">{{ payments.0.user.points }}점</h2>
+            {% endif %}
+        </div>
+</div>
+
+
+    </div>
+
+    <div class="setting-button">
+        <a href="{% url 'mypage_detail_1' %}"><button type="button">내 정보 관리</button></a>
+    </div>
+
+
+<div class="date-buttons">
+    <button type="button" onclick="setDateFilter(7)">1주</button>
+    <button type="button" onclick="setDateFilter(1)">1개월</button>
+    <button type="button" onclick="setDateFilter(3)">3개월</button>
+    <button type="button" onclick="clearDateFilter()">초기화</button>
+</div>
+
+    <div class="DateSelector_view-date__ni2D4 rounded-box">
+         {% if start_date and end_date %}
+            {{ start_date }} ~ {{ end_date }}
+        {% endif %}
+    </div>
+
+
+
+    <div class="view">
+    <div class="view-pointsave">
+        {% for payment in payments %}
+            {% if payment.store.discount > 0 and payment.points_used == 0 %}
+                <div class="payment-item">
+                    <div class="payment-details">
+                        <div class="payment-date" style="font-size: 12px;">{{ payment.payment_date|date:"Y-m-d H:i:s" }}</div>
+                        <div class="store-name" style="font-weight: bold; font-size: 20px;">{{ payment.store.name }}</div>
+                    </div>
+                    <div class="payment-reward">
+                        <p class="reward-points">+{{ payment.store.discount }} <span class="reward-label">p</span></p>
+                        <span class="reward-label">적립</span>
+                    </div>
+                </div>
+                <hr class="payment-separator">
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="view-pointsave">
     {% for payment in payments %}
-        <div class="PaymentList_contents">
-            <div class="PaymentList_list-box">
-                <p class="PaymentList_title">{{ payment.store.name }}</p>
+        <div class="payment-item">
+            <div class="payment-details">
+                <div class="payment-date" style="font-size: 12px;">{{ payment.payment_date|date:"Y-m-d H:i:s" }}</div>
+                <div class="store-name" style="font-weight: bold; font-size: 20px;">{{ payment.store.name }}</div>
             </div>
-            <div>
-                <p class="PaymentList_amount__5xFap PaymentList_increase__aUxoB">{{ payment.total_amount }}원</p>
-                <p class="PaymentList_status-no-detail__H3Ktr PaymentList_increase__aUxoB">결제일: {{ payment.payment_date|date:"Y-m-d H:i:s" }}</p>
+            <div class="payment-reward">
+                <p class="reward-points">+{{ payment.store.discount }} <span class="reward-label">p</span></p>
+                <span class="reward-label">적립</span>
             </div>
         </div>
+        <hr class="payment-separator">
     {% endfor %}
+</div>
 
-    <script>
+    <div class="view-pointuse">
+    {% for payment in payments %}
+        <div class="payment-item">
+            <div class="payment-details">
+                <div class="payment-date" style="font-size: 12px;">{{ payment.payment_date|date:"Y-m-d H:i:s" }}</div>
+                <div class="store-name" style="font-weight: bold; font-size: 20px;">{{ payment.store.name }}</div>
+            </div>
+            <div class="payment-use">
+                <p class="use-points">-{{ payment.points_used }} <span class="use-label">p</span></p>
+                <span class="use-label">사용</span>
+            </div>
+        </div>
+        <hr class="payment-separator">
+    {% endfor %}
+</div>
+
+
+
+ <script>
         document.addEventListener('DOMContentLoaded', function () {
             $('#start_date, #end_date').datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true
+
+            });
+
+            setDateFilter(7);
+
+            // 1개월, 3개월, 6개월, 초기화 버튼에 클릭 이벤트 리스너 추가
+            $('.date-buttons button').click(function () {
+                // 모든 버튼의 배경색을 초기화
+                $('.date-buttons button').css('background-color', '#FFFFFF');
+                // 클릭한 버튼의 배경색을 변경
+                $(this).css('background-color', '#5F5B5B');
             });
         });
 
-        function setDateFilter(months) {
+        function setDateFilter(days) {
             var endDate = new Date();
             var startDate = new Date();
-            startDate.setMonth(startDate.getMonth() - months);
+            startDate.setDate(startDate.getDate() - days);
 
+            // 날짜 초기화
             $('#start_date').datepicker('setDate', startDate);
             $('#end_date').datepicker('setDate', endDate);
             updateDateView();
@@ -88,18 +325,19 @@
             $('#start_date').val('');
             $('#end_date').val('');
             updateDateView();
+            $('.DateSelector_view-date__ni2D4').hide(); // 초기화 버튼 클릭 시 숨김
         }
 
         function updateDateView() {
             var startDate = $('#start_date').val();
             var endDate = $('#end_date').val();
+            console.log('startDate:', startDate);
+            console.log('endDate:', endDate);
 
-            if (startDate && endDate) {
-                $('.DateSelector_view-date__ni2D4').text(startDate + ' ~ ' + endDate);
-            } else {
-                $('.DateSelector_view-date__ni2D4').text('');
-            }
+            // 수정된 부분: 날짜 입력값이 없어도 DateSelector_view-date__ni2D4를 업데이트
+            $('.DateSelector_view-date__ni2D4').text(startDate + ' ~ ' + endDate);
+            $('.DateSelector_view-date__ni2D4').toggle(startDate !== '' && endDate !== ''); // 날짜 선택 시 보이도록
         }
-    </script>
+ </script>
 
-{% endblock %}
+ {% endblock %}

@@ -68,7 +68,7 @@
 
     .highlight {
       position: absolute;
-      width: 40%;
+      width: 80%;
       height: 100%;
       background-color: #888;
     }
@@ -80,29 +80,21 @@
 </head>
 
 <body class="bg-light">
-
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
         <main class="form-signup2 w-100 m-auto">
-          <form style="padding-top: 10px;" action="{% url 'signup2' %}" method="post">
+          <form style="padding-top: 10px;" action="{% url 'signup4' %}" method="post">
             {% csrf_token %}
             <h1 class="h3 mb-3 fw-normal"><strong>간편가입</strong></h1>
               <div class="rectangle"><div class="highlight"></div></div>
-            <!-- 아이디받기 -->
-                    <div class="mb-3">
-                        <label class="form-label" style="color: gray; margin-bottom: 30px;">로그인에 사용할 아이디를 입력해 주세요</label>
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
-                                <label for="email">Email address(ID)</label>
-                            </div>
-                        {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+            <!-- 이름받기 -->
+                  <div class="mb-3">
+                      <label class="form-label" style="color: gray; margin-bottom: 30px;">이름을 입력해주세요</label>
+                      <div class="form-floating">
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+                          <label for="name">Name</label>
+                      </div>
                         <div class="btn_area">
                         <button type="submit" class="btn btn-primary w-100 py-2" id="btnNext" onclick="submitForm()">다음</button>
                         </div>
@@ -119,24 +111,22 @@
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
 <script>
-    function submitForm(event) {
+    function validateForm() {
+      var name = document.getElementById('name').value;
 
-      // 이메일과 비밀번호를 검증하는 로직 추가
-      var email = document.getElementById('email').value;
-
-      // 예시: 간단한 유효성 검사
-      if (!email.trim() ) {
-        alert('이메일을 입력하세요.');
-        event.preventDefault();
-        return;
+      // 간단한 유효성 검사: 이름이 비어있는지 확인
+      if (!name.trim()) {
+        alert('이름을 입력하세요.');
+        return false; // 폼 제출을 막음
       }
 
       // 여기서 다른 페이지로 이동하도록 처리
-      window.location.href = "{% url 'signup3' %}";
+      window.location.href = "{% url 'signup_complete' %}";
+      return true; // 폼 제출을 허용
     }
-  </script>
-</body>
+</script>
 
 </html>
 

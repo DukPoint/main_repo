@@ -1,10 +1,40 @@
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-# Create your models here.
-class User(models.Model):  # id필드는 장고가 자동적으로 생성하여 관리
-    email = models.CharField(max_length=300, unique=True)  # 그리하여 email 필드를 생성
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
+
+class User(AbstractUser):
+    email = models.CharField(max_length=300, unique=True)
     password = models.CharField(max_length=400)
-    points = models.PositiveIntegerField(default=0)  # 0과 양의 정수만 가능
+    points = models.PositiveIntegerField(default=0)
+    name = models.CharField(max_length=150, default='')
+    # last_login 필드 추가
+    last_login = models.DateTimeField(auto_now=True, null=True, blank=True)
+    username=None
+
+    objects = CustomUserManager()
+
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.email
@@ -54,13 +84,3 @@ class Payment(models.Model):  # 결제 정보
     total_amount = models.PositiveIntegerField(default=0)  # 총 결제 금액
     payment_date = models.DateTimeField(auto_now_add=True)  # 결제한 날짜 자동 저장
 
-    def save(self, *args, **kwargs):
-        self.points_used = min(self.points_used, self.user_points)
-
-        # Calculate total_amount based on menu_item's price, points_used, and store's discount.
-        if not self.total_amount:
-            menu_price = self.menu_item.price
-            discount = self.store.discount  # Assuming 'discount' is a field in the Store model
-            self.total_amount = max(0, menu_price - self.points_used - discount)
-
-        super().save(*args, **kwargs)

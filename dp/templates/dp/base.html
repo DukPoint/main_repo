@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DukPoint</title>
 
-    
+
     <!--====== Favicon Icon ======-->
     <link
       rel="shortcut icon"
@@ -79,6 +79,11 @@
         background-color: #971B44; /* 호버 시 배경 색상 변경 */
       }
 
+      .ud-hero {
+       background: var(--primary-color);
+       padding-top: 100px;
+    }
+
 
     </style>
   </head>
@@ -110,7 +115,7 @@
               </li>
 
               <li class="nav-item">
-                <a class="ud-menu-scroll" href="#about">후기서비스</a>
+                <a class="ud-menu-scroll" href="{% url 'review1' %}">후기서비스</a>
               </li>
               <li class="nav-item">
                 <a class="ud-menu-scroll" href="{% url 'mypage' %}">마이페이지</a>
@@ -133,12 +138,14 @@
     <!-- ====== Header End ====== -->
 
     <!-- ====== Hero Start ====== -->
+    <section class="ud-hero ud-hero-no-top" id="home">
 
-    <section class="ud-hero" id="home">
       <div class="container">
         {% block main-area %}
 
+
         {% endblock %}
+
         <div class="row">
           <div class="col-lg-12">
             <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
@@ -151,7 +158,7 @@
           </div>
         </div>
       </div>
-    </section> 
+    </section>
     <!-- ====== Hero End ====== -->
 
     <!-- ====== Footer Start ====== -->

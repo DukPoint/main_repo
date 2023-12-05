@@ -1,0 +1,28 @@
+{% extends 'dp/base.html' %}
+
+{% block main-area %}
+    {% load static %}
+    <style>
+        /* 기존의 스타일 내용을 여기에 추가하세요 */
+    </style>
+
+    <div class="main-content">
+        <div class="main-content-text">
+            <h5>마이페이지</h5>
+            <p>Email: {{ user.email }}</p>
+        </div>
+        <hr>
+
+        <form method="post" action="{% url 'change_password_mypage' %}" id="change-password-form">
+            {% csrf_token %}
+
+            <label for="new-password">새로운 비밀번호:</label>
+            <input type="password" name="new-password" required>
+
+            <label for="confirm-password">비밀번호 확인:</label>
+            <input type="password" name="confirm-password" required>
+
+            <button type="submit">비밀번호 변경</button>
+        </form>
+    </div>
+{% endblock %}
